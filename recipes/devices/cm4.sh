@@ -152,7 +152,7 @@ device_chroot_tweaks_pre() {
 		[6.1.64]="01145f0eb166cbc68dd2fe63740fac04d682133e|master|1702"
 	)
 	# Version we want
-	KERNEL_VERSION="5.10.95"
+	KERNEL_VERSION="6.1.64"
 
 	MAJOR_VERSION=$(echo "$KERNEL_VERSION" | cut -d '.' -f 1)
 	MINOR_VERSION=$(echo "$KERNEL_VERSION" | cut -d '.' -f 2)
@@ -338,24 +338,18 @@ device_chroot_tweaks_pre() {
 		dtparam=audio=off
 		disable_splash=1
 		force_eeprom_read=0
-		gpio=5=op,dl
 		dtoverlay=dwc2,dr_mode=host
 		dtparam=ant2
 		enable_uart=1
 		dtparam=uart0=on
 		dtparam=uart1=off
 		dtoverlay=uart4
-		display_auto_detect=1
-		dtoverlay=motivo-panel-a
 		start_x=1
 		gpu_mem=256
-		dtoverlay=vc4-kms-v3d,cma-384,audio=off,noaudio=on
 		max_framebuffers=1
-		display_lcd_rotate=1
-		display_hdmi_rotate=1
-		include displayconfig.txt
-		#arm_freq=1200
-		dtoverlay=iqaudio-digi-wm8804-audio
+		dtoverlay=vc4-kms-v3d,cma-384,audio=off,noaudio=on
+		dtoverlay=vc4-kms-dsi-waveshare-panel,11_9_inch
+		dtoverlay=rpi-dac
 	EOF
 
 	log "Writing cmdline.txt file"
@@ -386,8 +380,6 @@ device_chroot_tweaks_pre() {
 		# ALSA settings
 		"snd-bcm2835.enable_compat_alsa=1"
 		"snd_bcm2835.enable_hdmi=0"
-		# DSI display
-		"video=DSI-1:800x1280M@60,rotate=90"
 	)
 
 	if [[ $DEBUG_IMAGE == yes ]]; then
